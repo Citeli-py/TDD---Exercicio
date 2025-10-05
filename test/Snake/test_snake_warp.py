@@ -35,7 +35,6 @@ def test_snake_wrap_bottom_wall():
     """
     Verifica se a cobra atravessa a parede de baixo e aparece em cima
     """
-    snake = Snake(initial_position=(5, 9), screen_size=(10, 10))
-    snake.change_direction("DOWN")
+    snake = Snake(initial_position=(5, 9), screen_size=(10, 10), direction="DOWN")
     snake.move()
     assert snake.head() == (5, 0)
