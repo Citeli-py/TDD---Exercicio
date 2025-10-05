@@ -24,3 +24,4 @@ def test_snake_grow():
     assert len(snake.body) == 2  # deve ter crescido
     assert snake.body[0] == (5, 4)  # cabeça nova posição
     assert snake.body[1] == (5, 5)  # cauda antiga posição
+
