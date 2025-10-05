@@ -8,7 +8,8 @@ DIRECTIONS = {
 class Snake:
     def __init__(self, initial_position=(0, 0), screen_size = (10, 10), direction="UP"):
         self.body = [initial_position]
-        self.screen_size = screen_size
+        self.screen_width = screen_size[0]
+        self.screen_height = screen_size[1]
         self.direction = direction
         self.grow_pending = False
 
@@ -22,7 +23,10 @@ class Snake:
 
     def move(self):
         dx, dy = DIRECTIONS[self.direction]
-        new_head = ( (self.head()[0] + dx)%self.screen_size[0], (self.head()[1] + dy)%self.screen_size[1] )
+        new_x = (self.head()[0] + dx)%self.screen_width
+        new_y = (self.head()[1] + dy)%self.screen_height
+
+        new_head = ( new_x, new_y )
         self.body.insert(0, new_head)
 
         if not self.grow_pending:
