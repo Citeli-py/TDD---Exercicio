@@ -36,3 +36,13 @@ class Snake:
 
     def grow(self):
         self.grow_pending = True
+
+
+    def colide(self, ):
+
+        for part in self.body[1:]:
+            if part == self.head():
+                return True
+        
+        return False
+    
