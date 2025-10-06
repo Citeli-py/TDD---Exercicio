@@ -36,3 +36,12 @@ class Snake:
 
     def grow(self):
         self.grow_pending = True
+
+
+    def colide(self) -> bool:
+        """Verifica se a cobra colidiu com ela mesma."""
+        return self.head() in self.body[1:]
+
+    def colide_fruta(self, fruta) -> bool:
+        """Verifica se a cobra colidiu com a fruta."""
+        return self.head() == fruta
