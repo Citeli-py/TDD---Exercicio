@@ -46,3 +46,5 @@ class Snake:
         
         return False
     
+    def colide_fruta(self, fruta):
+        return self.head() == fruta
