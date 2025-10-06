@@ -38,13 +38,10 @@ class Snake:
         self.grow_pending = True
 
 
-    def colide(self, ):
+    def colide(self) -> bool:
+        """Verifica se a cobra colidiu com ela mesma."""
+        return self.head() in self.body[1:]
 
-        for part in self.body[1:]:
-            if part == self.head():
-                return True
-        
-        return False
-    
-    def colide_fruta(self, fruta):
+    def colide_fruta(self, fruta) -> bool:
+        """Verifica se a cobra colidiu com a fruta."""
         return self.head() == fruta
