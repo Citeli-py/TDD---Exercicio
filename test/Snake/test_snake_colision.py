@@ -7,6 +7,8 @@ def test_colide_cauda():
     directions = ["RIGHT", "DOWN", "LEFT", "UP"]
 
     for direction in directions:
+        assert not snake.colide()
+        
         snake.change_direction(direction)
         snake.grow()
         snake.move()
