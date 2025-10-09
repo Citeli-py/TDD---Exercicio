@@ -24,3 +24,52 @@ Etapa 2
 Etapa N
 
 Façam etapas até que o jogo esteja completo e todos os testes estejam verdes.
+
+# Como rodar
+## 💻 Pré-requisitos
+
+Antes de rodar o projeto, você precisa ter:
+- Python 3.10+
+- UV (gerenciador de ambientes virtuais)
+- Dependências do projeto (pip)
+- Permissões de acesso ao teclado (necessário para o pacote keyboard no Linux)
+
+## ⚙️ Instalação com UV
+
+### Crie e ative o ambiente virtual usando UV:
+```bash
+uv venv create .venv
+uv venv activate .venv
+```
+Isso cria um ambiente virtual .venv isolado e já o ativa.
+
+### Instale as dependências do projeto com pip:
+
+```bash
+uv sync
+```
+
+O keyboard requer acesso ao teclado do SO, especialmente no Linux.
+
+## 🧪 Rodando os testes
+
+Dentro do ambiente virtual UV, execute:
+
+```bash
+uv run pytest -vv
+```
+
+Todos os testes do TDD devem passar antes de rodar o jogo.
+
+## ▶️ Rodando o jogo no Ubuntu/Linux
+
+No Linux, o pacote keyboard precisa de permissões de root para acessar eventos do teclado. Execute:
+
+```bash
+sudo .venv/bin/python3 -m src.main
+```
+
+
+Use WASD para mover a cobra.
+Pressione ESC para sair do jogo.
+O jogo usa a classe io_handler para desenhar o tabuleiro e receber entradas do teclado.
