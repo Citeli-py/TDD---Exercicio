@@ -1,5 +1,5 @@
-from ioHandler import io_handler
-from game import Game
+from src.ioHandler import io_handler
+from src.game import Game
 import time
 import sys
 

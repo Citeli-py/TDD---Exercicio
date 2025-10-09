@@ -1,6 +1,6 @@
 import random
-from snake import Snake
-from ioHandler import io_handler
+from src.snake import Snake
+from src.ioHandler import io_handler
 
 
 class Game:
@@ -39,7 +39,7 @@ class Game:
             if fruta not in self.snake.body:
                 return fruta
 
-    def _atualizar_frutas(self) -> None:
+    def atualizar_frutas(self) -> None:
         """
         Garante que a quantidade de frutas em jogo
         corresponda ao tamanho da cobra.
@@ -61,7 +61,7 @@ class Game:
         """Avança o estado do jogo (movimento, colisões, frutas, etc)."""
         self.snake.move()
         self._verificar_colisoes()
-        self._atualizar_frutas()
+        self.atualizar_frutas()
 
     def _verificar_colisoes(self) -> None:
         """Verifica colisões com frutas e consigo mesma."""
