@@ -53,23 +53,3 @@ class io_handler:
         for line in self.matrix:
             display_content_line(line)
         display_h_line(self)
-
-### exemplo do uso da classe io_handler  
-instance = io_handler((10,15), 0.5)
-instance.matrix[0][0] = 1 #corpo
-instance.matrix[0][1] = 2 #cabeça
-instance.matrix[0][2] = 3 #fruta
-
-def game_loop():
-    instance.record_inputs()
-    while True:
-        instance.display()
-        print("mova com WASD, saia com esc. Ultimo botão:", end=' ')
-        ###adicione seu código para lidar com o jogo aqui
-
-        print(instance.last_input)
-        if(instance.last_input == 'end'):
-            exit()
-        time.sleep(instance.game_speed)
-
-game_loop()
