@@ -1,11 +1,13 @@
 import pytest
 from src.game import Game
 from src.snake import Snake
+from src.ioHandler import io_handler
 
 
 @pytest.fixture
 def game():
-    return Game(width=10, height=10)
+    io = io_handler((10,10), 0.5)
+    return Game(io)
 
 
 def test_game_possui_uma_cobra(game):
