@@ -100,7 +100,8 @@ def test_gamestate_atualiza_apos_comer_fruta(game):
     game.snake.change_direction("RIGHT")
 
     tamanho_antes = len(game.snake.body)
-    game.atualizar()  # deve comer a fruta
+    game.atualizar()  # come a fruta
+    game.atualizar()  # cresce efetivamente
     tamanho_depois = len(game.snake.body)
 
     assert tamanho_depois == tamanho_antes + 1, "A cobra deve crescer ao comer uma fruta."
