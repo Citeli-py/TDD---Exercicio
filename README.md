@@ -61,14 +61,11 @@ uv run pytest -vv
 
 Todos os testes do TDD devem passar antes de rodar o jogo.
 
-## ▶️ Rodando o jogo no Ubuntu/Linux
-
-No Linux, o pacote keyboard precisa de permissões de root para acessar eventos do teclado. Execute:
+## Rodando o jogo
 
 ```bash
-sudo .venv/bin/python3 -m src.main
+uv run -m src.main
 ```
-
 
 Use WASD para mover a cobra.
 Pressione ESC para sair do jogo.
