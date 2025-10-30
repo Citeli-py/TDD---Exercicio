@@ -1,12 +1,13 @@
 import random
-from src.snake import Snake
-from src.ioHandler import io_handler
+from .snake import Snake
+from .ioHandler_pygame import IoHandlerPygame
+from pygame import image
 
 
 class Game:
     """Controla a lógica principal do jogo Snake."""
 
-    def __init__(self, io: io_handler):
+    def __init__(self, io: IoHandlerPygame):
         self.width = io.x_size
         self.height = io.y_size
         self.io = io
@@ -100,18 +101,14 @@ class Game:
         2 = cabeça da cobra
         3 = fruta
         """
-        matrix = [[0] * self.width for _ in range(self.height)]
+        matrix = [[None] * self.width for _ in range(self.height)]
 
-        # Corpo
-        for x, y in self.snake.body[1:]:
-            matrix[y][x] = 1
-
-        # Cabeça
-        head_x, head_y = self.snake.head()
-        matrix[head_y][head_x] = 2
+        # Cobra
+        for pos, sprite in self.snake.get_sprites():
+            matrix[pos[1]][pos[0]] = sprite
 
         # Frutas
         for fx, fy in self.frutas:
-            matrix[fy][fx] = 3
+            matrix[fy][fx] = image.load("src/assets/apple.png").convert_alpha()
 
         return matrix
