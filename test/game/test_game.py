@@ -110,5 +110,5 @@ def test_gamestate_reseta_apos_colisao(game):
     game.snake.body = [(1, 1), (1, 2), (2, 2), (2, 1), (1, 1)]
     game._verificar_colisoes()
 
-    assert len(game.snake.body) == 1, "Após reiniciar, deve existir uma única cabeça."
+    assert len(game.snake.body) == 2, "Após reiniciar, deve existir uma única cabeça e um rabo."
     assert len(game.frutas) == 1, "Após reiniciar, o jogo deve conter uma fruta."
