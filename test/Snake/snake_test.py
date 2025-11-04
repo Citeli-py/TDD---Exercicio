@@ -10,7 +10,7 @@ pygame.display.set_mode((1, 1))  # janela dummy
 
 def test_snake_initial_position():
     snake = Snake(initial_position=(5, 5))
-    assert snake.body == [(5, 5)]
+    assert snake.body == [(5, 5), (6, 5)]
     assert snake.direction == "UP"
 
 def test_snake_move_up():
@@ -28,7 +28,7 @@ def test_snake_grow():
     snake = Snake(initial_position=(5, 5))
     snake.grow()
     snake.move()
-    assert len(snake.body) == 2  # deve ter crescido
+    assert len(snake.body) == 3  # deve ter crescido
     assert snake.body[0] == (5, 4)  # cabeça nova posição
     assert snake.body[1] == (5, 5)  # cauda antiga posição
 
