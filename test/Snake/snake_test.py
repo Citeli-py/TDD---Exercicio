@@ -1,6 +1,13 @@
 import pytest
 from src.snake import Snake
 
+import os
+os.environ["SDL_VIDEODRIVER"] = "dummy"
+
+import pygame
+pygame.init()
+pygame.display.set_mode((1, 1))  # janela dummy
+
 def test_snake_initial_position():
     snake = Snake(initial_position=(5, 5))
     assert snake.body == [(5, 5)]
