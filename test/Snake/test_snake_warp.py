@@ -1,6 +1,13 @@
 import pytest
 from src.snake import Snake
 
+import os
+os.environ["SDL_VIDEODRIVER"] = "dummy"
+
+import pygame
+pygame.init()
+pygame.display.set_mode((1, 1))  # janela dummy
+
 def test_snake_wrap_right_wall():
     """
     Verifica se a cobra atravessa a parede da direita e aparece no lado esquerdo

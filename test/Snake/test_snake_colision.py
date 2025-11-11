@@ -1,12 +1,21 @@
 import pytest
 from src.snake import Snake
 
+import os
+os.environ["SDL_VIDEODRIVER"] = "dummy"
+
+import pygame
+pygame.init()
+pygame.display.set_mode((1, 1))  # janela dummy
 
 def test_colide_cauda():
     snake = Snake()
+
+    snake.body = [(0,0)]
     directions = ["RIGHT", "DOWN", "LEFT", "UP"]
 
     for direction in directions:
+        print(snake.body)
         assert not snake.colide()
         
         snake.change_direction(direction)

@@ -49,12 +49,26 @@ class IoHandlerPygame:
                     pygame.quit()
                     sys.exit()
 
+
+    def draw_backgroud(self, ):
+
+        self.screen.fill((20, 20, 20))
+
+        for y in range(self.y_size):
+            for x in range(self.x_size):
+                pygame.draw.rect(
+                    self.screen,
+                    (50, 50, 50),
+                    pygame.Rect(x * self.cell_size, y * self.cell_size, self.cell_size, self.cell_size),
+                    1,
+                )
+
     # ----------------------------------------------------------------------
     # Rendering
     # ----------------------------------------------------------------------
     def display(self, title_info=None):
         """Renderiza todos os objetos presentes na matriz."""
-        self.screen.fill((20, 20, 20))
+        self.draw_backgroud()
 
         for y in range(self.y_size):
             for x in range(self.x_size):
@@ -62,17 +76,7 @@ class IoHandlerPygame:
                 
                 if obj:
                     self.screen.blit(obj, (x * self.cell_size, y * self.cell_size))
-                    # Se for cor (tuple RGB), desenha um retângulo
-                else:
-                    rect = pygame.Rect(x * self.cell_size, y * self.cell_size, self.cell_size, self.cell_size)
-                    pygame.draw.rect(self.screen, (0,0,0), rect)
 
-                pygame.draw.rect(
-                    self.screen,
-                    (50, 50, 50),
-                    pygame.Rect(x * self.cell_size, y * self.cell_size, self.cell_size, self.cell_size),
-                    1,
-                )
 
 
         pygame.display.flip()

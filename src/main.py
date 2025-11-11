@@ -1,28 +1,21 @@
-from src.ioHandler import io_handler
-from src.game import Game
+#from src.ioHandler import io_handler
+from .ioHandler_pygame import IoHandlerPygame
+from .game import Game
 import time
 import sys
 
 def game_loop():
     # Inicializa o IO e o jogo
-    io = io_handler((20, 10), 0.2)
+    #io = io_handler((20, 10), 0.2)
+    io = IoHandlerPygame(fps=5)
     game = Game(io)
 
-    io.record_inputs()
 
     while True:
+        io.record_inputs()
+        io.clear_matrix()
         # Atualiza direção da cobra conforme entrada
-        if io.last_input == 'w':
-            game.snake.change_direction("UP")
-        elif io.last_input == 's':
-            game.snake.change_direction("DOWN")
-        elif io.last_input == 'a':
-            game.snake.change_direction("LEFT")
-        elif io.last_input == 'd':
-            game.snake.change_direction("RIGHT")
-        elif io.last_input == 'end':
-            print("Jogo encerrado.")
-            sys.exit(0)
+        game.snake.change_direction(io.last_input)
 
         # Atualiza estado do jogo
         game.atualizar()
@@ -33,7 +26,6 @@ def game_loop():
 
         # Mostra na tela
         io.display()
-        print(f"Tamanho da cobra: {len(game.snake.body)} | Frutas: {len(game.frutas)}")
 
         # Aguarda o próximo tick
         time.sleep(io.game_speed)
