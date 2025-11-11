@@ -75,65 +75,30 @@ class Snake:
         """Verifica se a cobra colidiu com a fruta."""
         return self.head() == fruta
     
-    def wrapped_dir(self, a, b, size):
+    
+    def _wrapped_dir(self, p1, p2) -> tuple[int, int]:
         """
         Calcula a direção entre duas coordenadas considerando warp.
-        Retorna -1, 0 ou 1.
+        Retorna uma tupla (x,y), onde x e y podem ser -1, 0 ou 1.
         """
-        diff = a - b
-        if diff > size // 2:
-            diff -= size
-        elif diff < -size // 2:
-            diff += size
-        return diff
 
+
+        def normalize(a, b, size)->int:
+            diff = a - b
+            if diff > size // 2:
+                diff -= size
+            elif diff < -size // 2:
+                diff += size
+            return diff
+        
+        size = (self.screen_width, self.screen_height)
+        
+        x = normalize(p1[0], p2[0], size[0])
+        y = normalize(p1[1], p2[1], size[1])
+
+        return (x, y)
     
-    def get_sprites(self) -> list[tuple[tuple[int, int], Surface]]:
-        sprites = []
-
-        # === Cabeça ===
-        head_pos = self.body[0]
-        sprites.append((head_pos, self.sprites_head[self.direction]))
-
-        # === Corpo (exceto cabeça e cauda) ===
-        for i in range(1, len(self.body) - 1):
-            prev_x, prev_y = self.body[i - 1]
-            curr_x, curr_y = self.body[i]
-            next_x, next_y = self.body[i + 1]
-
-            # Vetores relativos
-            dir_prev = (
-                self.wrapped_dir(prev_x, curr_x, self.screen_width),
-                self.wrapped_dir(prev_y, curr_y, self.screen_height)
-            )
-            dir_next = (
-                self.wrapped_dir(next_x, curr_x, self.screen_width),
-                self.wrapped_dir(next_y, curr_y, self.screen_height)
-            )
-
-            # Corpo reto
-            if dir_prev[0] == dir_next[0]:
-                sprite = self.sprites_body["vertical"]
-            elif dir_prev[1] == dir_next[1]:
-                sprite = self.sprites_body["horizontal"]
-            else:
-                # Curvas — combinação de direções
-                curva = None
-                if (dir_prev, dir_next) in [((0, -1), (-1, 0)), ((-1, 0), (0, -1))]:
-                    curva = "topleft"
-                elif (dir_prev, dir_next) in [((0, -1), (1, 0)), ((1, 0), (0, -1))]:
-                    curva = "topright"
-                elif (dir_prev, dir_next) in [((0, 1), (-1, 0)), ((-1, 0), (0, 1))]:
-                    curva = "bottomleft"
-                elif (dir_prev, dir_next) in [((0, 1), (1, 0)), ((1, 0), (0, 1))]:
-                    curva = "bottomright"
-
-                if not curva:
-                    print(dir_prev, dir_next)
-                sprite = self.sprites_body[curva]
-
-            sprites.append(((curr_x, curr_y), sprite))
-
+    def _get_tail_sprite(self, ) -> tuple[tuple[int, int], Surface]:
         # === Cauda ===
         if len(self.body) > 1:
             tail = self.body[-1]
@@ -151,7 +116,53 @@ class Snake:
             else:
                 direction = "down"
 
-            sprites.append((tail, self.sprites_tail[direction]))
+        return (tail, self.sprites_tail[direction])
+    
+    def _get_body_sprite(self, pos: int) -> tuple[tuple[int, int], Surface]:
+
+        prev_pos = self.body[pos - 1]
+        curr_pos = self.body[pos]
+        next_pos = self.body[pos + 1]
+
+        # Vetores relativos
+        dir_prev = self._wrapped_dir(prev_pos, curr_pos)
+        dir_next = self._wrapped_dir(next_pos, curr_pos)
+        
+         # Corpo reto
+        if dir_prev[0] == dir_next[0]:
+            sprite = self.sprites_body["vertical"]
+        elif dir_prev[1] == dir_next[1]:
+            sprite = self.sprites_body["horizontal"]
+        else:
+            # Curvas — combinação de direções
+            curva = None
+            if (dir_prev, dir_next) in [((0, -1), (-1, 0)), ((-1, 0), (0, -1))]:
+                curva = "topleft"
+            elif (dir_prev, dir_next) in [((0, -1), (1, 0)), ((1, 0), (0, -1))]:
+                curva = "topright"
+            elif (dir_prev, dir_next) in [((0, 1), (-1, 0)), ((-1, 0), (0, 1))]:
+                curva = "bottomleft"
+            elif (dir_prev, dir_next) in [((0, 1), (1, 0)), ((1, 0), (0, 1))]:
+                curva = "bottomright"
+
+            sprite = self.sprites_body[curva]
+
+        return (curr_pos, sprite)
+
+
+    
+    def get_sprites(self) -> list[tuple[tuple[int, int], Surface]]:
+        sprites = []
+
+        # === Cabeça ===
+        head_pos = self.body[0]
+        sprites.append((head_pos, self.sprites_head[self.direction]))
+
+        # === Corpo (exceto cabeça e cauda) ===
+        for i in range(1, len(self.body) - 1):
+            sprites.append(self._get_body_sprite(i))
+
+        sprites.append(self._get_tail_sprite())
 
         return sprites
 
